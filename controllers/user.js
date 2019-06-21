@@ -14,12 +14,12 @@ exports.getUser = (req, res, next) => {
 
 exports.postUser = (req, res, next) => {
     const {
-        Name,
         Username,
+        Email,
         Password
     } = req.body
 
-    if (!Name || !Username || !Password) {
+    if (!Username || !Password || !Email) {
         res.status(400).json({
             msg: "All fields are required"
         })
@@ -42,8 +42,8 @@ exports.postUser = (req, res, next) => {
                     throw error;
                 }
                 User.create({
-                    Name,
                     Username,
+                    Email,
                     Password: hashedPassword
                 })
                     .then(user => {
@@ -58,8 +58,8 @@ exports.postUser = (req, res, next) => {
                                     token,
                                     user: {
                                         id: user.id,
-                                        Name: user.Name,
                                         Username: user.Username,
+                                        Email: user.Email,
                                         Password: user.Password
                                     }
                                 })
